@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include <stdbool.h>
+#include <ctype.h>
+#include <string.h>
+
+bool CodelandUsernameValidation(const char *str) {
+    // Rule 1: The username is between 4 and 25 characters.
+    size_t len = strlen(str);
+    if (len < 4 || len > 25) {
+        return false;
+    }
+
+    // Rule 2: It must start with a letter.
+    if (!isalpha(str[0])) {
+        return false;
+    }
+
+    // Rule 3: It can only contain letters, numbers, and the underscore character.
+    for (size_t i = 1; i < len; ++i) {
+        if (!(isalnum(str[i]) || str[i] == '_')) {
+            return false;
+        }
+    }
+
+    // Rule 4: It cannot end with an underscore character.
+    if (str[len - 1] == '_') {
+        return false;
+    }
+
+    // If all rules pass, the username is valid.
+    return true;
+}
+
+int main() {
+    // Example usage:
+    const char *username1 = "Valid_User123";
+    const char *username2 = "Invalid_User_";
+
+    printf("%s is %s\n", username1, CodelandUsernameValidation(username1) ? "valid" : "invalid");
+    printf("%s is %s\n", username2, CodelandUsernameValidation(username2) ? "valid" : "invalid");
+
+    return 0;
+}
